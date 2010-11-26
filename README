@@ -4,11 +4,55 @@ Corral - The Scala actor shoot out.
 
 XXX
 
-* Setup *
+
+* Run *
 
 1. Pull down dependencies.
 $ ./sbt update
 
-2. Run it.
+
+2. Pick your poison:
+
 $ ./sbt run
+...
+[info] == run ==
+
+Multiple main classes detected, select one to run:
+
+ [1] corral.core.Main
+ [2] corral.test.LoadTestRunner
+
+Enter number: 1
+
+[info] Running corral.core.Main 
+
+
+3. Run the load tests...
+
+$ ./sbt run
+...
+[info] == run ==
+
+Multiple main classes detected, select one to run:
+
+
+ [1] corral.core.Main
+ [2] corral.test.LoadTestRunner
+
+Enter number: 2
+
+[info] Running corral.test.LoadTestRunner 
+
+Executing 10000 requests(s) over 100 threads
+java.net.SocketException: Connection reset by peer
+java.net.SocketException: Connection reset by peer
+java.net.SocketException: Connection reset by peer
+
+Done in 8.695s; Total requests: 10000; 1150.0862564692352 req/s
+Status 99.97% (9997 successes, 3 failures)
+
+
+* Logs *
+
+Logs go into logs/corral.log
 
