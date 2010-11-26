@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="specs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib_managed/scala_2.8.0/test/specs_2.8.0-1.6.6-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib_managed/scala_2.8.0/test/specs_2.8.0-1.6.6-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

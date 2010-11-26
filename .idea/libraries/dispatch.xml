@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="dispatch">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib_managed/scala_2.8.0/compile/dispatch-json_2.8.0-0.7.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/etc/src/dispatch-0.7.5.zip!/" />
+    </SOURCES>
+  </library>
+</component>

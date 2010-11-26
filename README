@@ -1,0 +1,14 @@
+Corral - The Scala actor shoot out.
+
+* Overview *
+
+XXX
+
+* Setup *
+
+1. Pull down dependencies.
+$ ./sbt update
+
+2. Run it.
+$ ./sbt run
+

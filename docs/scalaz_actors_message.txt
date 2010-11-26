@@ -1,0 +1,54 @@
+1)
+err : Throwable => Unit
+ 
+This is your method of handling errors.  If you wish to link actors and have supervisor hierarchies provide a function like:  { err : Throwable => supervisor ! (actor, err) }
+
+
+2)
+c: A => Unit
+
+This is your message handling routine.  Just make it be a partial function, and you'r ready to get messages.   { case Foo() => handleFoo() } where the Foo() pattern is matchable on A (we need a symbol for that.... Foo p: A ?)
+
+Note: that's it's *typed by default*.  That's a big wio for using sealed trait hierarchies with your message API.
+
+3)
+s : Strategy[Unit]
+
+This is your mechanism of hooking into the scheduler of the actors.  scalaz.concurrent.strategy has a few of these implemented.
+
+Here's an example "swing" strategy for executing message handling as part of the normal AWTEventQueue processing (i.e. in the AWT thread). Note: I'm copying this code from memory, so I may have messed it up, also it's not the most robust implementation).
+
+package scalaz.concurrent.strategy
+
+object Swing {
+   //This class exists solely to convert a Runnable to a Future for the older EventQueue interfaces that only has "invokeLater" and "invokeAndWait" for tasks.
+   private[this] class Future[A](f : () => A) extends Runnable {
+       private var result : Option[A] = None
+       override def run() : Unit = {
+          val r = f()
+          synchronized {
+             done = Some(r)
+             notify()
+          }
+       }
+
+       def get : A = {
+           synchronized {
+              while(!done.isDefined) {
+                 wait()
+              }
+              done.get
+           }
+       }
+   }
+   implicit def strategy[A] = new Strategy[A] {
+     def apply(a : () => A) = {
+       val future = new Future(a)
+       _root_.javax.swing.SwingUtilities.invokeLater(future)
+       () => future.get
+     }
+   }
+}
+
+
+Anyway, I hope that helps you get started if you're interested in scalaz.  I'd love to see someone take the base framework and start adding helper things like supervisor hierarchies (e.g. "restart all on failure", etc.) but in the standard scalaz elegant way.
