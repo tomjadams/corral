@@ -10,10 +10,12 @@ final case class Notification(message: String) {
 }
 
 object NotificationProcessor {
-  def process(notificationPayload: String)(implicit uuid: UUID) {
+  def process(notificationPayload: String)(implicit uuid: UUID) = {
     infoC("Starting to process payload")
+    // TODO Return failure here
     parseJson(notificationPayload).map(n => parseNotification(n)).|||(t => warnC("Unable to parse payload, error follows.", t))
     infoC("Completed processing payload")
+    Map('result -> "Successfully processed payload")
   }
 
   def parseNotification(payload: JsValue)(implicit uuid: UUID) {

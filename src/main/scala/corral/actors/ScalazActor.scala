@@ -1,11 +1,23 @@
 package corral.actors
 
+import corral.core.{Environment, ReceiveActorCore, SendActorCore}
+import java.net.Socket
+import java.util.UUID
 import scalaz._, scalaz.concurrent._, Scalaz._
-import corral.core.{Environment, ActorCore}
 
-object ScalazActor {
+object ScalazActors {
+  import corral.core.ActorCore._
+
   implicit val pool = Environment.threadPool
   implicit val s = Strategy.Executor
 
-  val scalazActor = actor(ActorCore.process _)
+  val scalazReceiveActor = actor((s: Socket) => {
+    val response = ReceiveActorCore.recieve(s)
+    val x = (s, response._1, response._2)
+    scalazSendActor ! x
+  })
+
+  val scalazSendActor = actor((t: (Socket, UUID, Response)) => {
+    SendActorCore.send(t)
+  })
 }

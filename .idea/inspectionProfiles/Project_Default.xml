@@ -2,6 +2,7 @@
   <profile version="1.0" is_locked="false">
     <option name="myName" value="Project Default" />
     <option name="myLocal" value="false" />
+    <inspection_tool class="File Name" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="Suspicious New Line in Method Call" enabled="true" level="WARNING" enabled_by_default="true" />
   </profile>
 </component>
