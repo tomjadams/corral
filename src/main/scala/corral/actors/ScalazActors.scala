@@ -11,13 +11,12 @@ object ScalazActors {
   implicit val pool = Environment.threadPool
   implicit val s = Strategy.Executor
 
-  val scalazReceiveActor = actor((s: Socket) => {
+  def scalazReceiveActor = actor((s: Socket) => {
     val response = ReceiveActorCore.recieve(s)
-    val x = (s, response._1, response._2)
-    scalazSendActor ! x
+    scalazSendActor ! (s, response._1, response._2)
   })
 
-  val scalazSendActor = actor((t: (Socket, UUID, Response)) => {
+  def scalazSendActor = actor((t: (Socket, UUID, Response)) => {
     SendActorCore.send(t)
   })
 }
