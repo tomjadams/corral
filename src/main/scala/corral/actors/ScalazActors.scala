@@ -11,6 +11,7 @@ object ScalazActors {
   implicit val pool = Environment.threadPool
   implicit val s = Strategy.Executor
 
+  // TODO Pull the layloads of these out into case classes.
   def scalazReceiveActor = actor((s: Socket) => {
     val response = ReceiveActorCore.recieve(s)
     scalazSendActor ! (s, response._1, response._2)
